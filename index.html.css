@@ -1,0 +1,12 @@
+@font-face
+{
+    font-family:'minecraft';
+    src:url(minecraft.ttf);
+    font-style:normal; 
+    font-weight:normal
+}
+a{
+    background-color:rgb(200, 200,200);
+    font-family: 'minecraft';
+    font-size: 200px;
+}
