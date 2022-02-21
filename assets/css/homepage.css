@@ -1,0 +1,52 @@
+header {
+	display: block;
+	width: 100%;
+	color: #ffffff;
+	text-align: center;
+	background-color: transparent;
+
+	--line-color: #ffffff;
+	--text-color: #ffffff;
+}
+	@media screen and (min-width: 1200px) {
+		header {
+			min-height: 80vh;
+			padding: 20vh 0 0 0;
+		}
+	}
+	@media screen and (max-width: 1200px) {
+		header {
+			min-height: calc(100vh - 4rem);
+			padding: 4rem 0 0 0;
+		}
+	}
+
+	header * {
+		margin-left: auto;
+		margin-right: auto;
+	}
+		header .column {
+			width: 50%;
+		}
+
+		span.scrollDown {
+			display: inline-block;
+			position: absolute;
+			min-width: unset;
+			width: 1.6rem;
+			height: 1.6rem;
+			text-decoration: none;
+			border-radius: 0;
+			border-right: 2px #ffffff solid !important;
+			border-bottom: 2px #ffffff solid !important;
+			transform: rotate(45deg) translateX(-0.8rem);
+			cursor: pointer;
+			opacity: 0.7;
+			transition: var(--transition);
+			bottom: 2rem;
+		}
+			span.scrollDown:hover {
+				opacity: 1;
+				transform: rotate(45deg) translate(-0.7rem, 0.1rem);
+				transition: var(--transition);
+			}
