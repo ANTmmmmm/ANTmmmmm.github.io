@@ -1,0 +1,16 @@
+@font-face
+{
+    font-family:'minecraft';
+    src:url(minecraft.ttf);
+    font-style:normal; 
+    font-weight:normal
+}
+a{
+    background-color:rgb(200, 200,200);
+    font-family: 'minecraft';
+    font-size: 200px;
+}
+a:link {color:#000000;}      /* 未访问链接*/
+a:visited {color:#00FF00;}  /* 已访问链接 */
+a:hover {color:#FF00FF;}  /* 鼠标移动到链接上 */
+a:active {color:#0000FF;}  /* 鼠标点击时 */
