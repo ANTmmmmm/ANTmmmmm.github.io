@@ -12,6 +12,7 @@
 
 </html>
 <script src="assets\js\jjQuery.js"></script>
+<script src="assets\js\download.js"></script>
 <script>
     var dir
     //alert('提示：\n由于Minecraft源服务器网络问题，可能使首次访问时列表顺序混乱\n请稍等4~5秒后\n\n             ↓↓↓↓↓↓\n        →刷新页面←\n             ↑↑↑↑↑↑\n\n\n即可正常顺序的信息！')
@@ -29,7 +30,7 @@
 
     function get(data) {
         data = data
-        for (i in data.versions) {
+        for (i in data.versions.slice(0,-65)) {
             url = data.versions[i].url
             $.getJSON(url, function (raw) {
                 raw = raw
@@ -47,6 +48,11 @@
                         <tr><td>' + ver_id + '</td><td>\u200b' + rel_date + '<td><a style="white-space: nowrap;" href=' + file_url + '>' + file_url + '</a></td></tr>'
                         }
                     }
+                    else {
+                        sortTable(1)
+                        sortTable(1)
+                        throw new Error
+                    }
                 }
                 catch {
                     sortTable(1)
@@ -60,46 +66,48 @@
 
 
     function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, switchcount = 0;
-        table = document.getElementById("myTable2");
-        switching = true;
-        dir = "asc";
-
+        var table, rows, switching, i, x, y, shouldSwitch, switchcount = 0
+        table = document.getElementById("myTable2")
+        switching = true
+        dir = "asc"
         while (switching) {
-            switching = false;
-            rows = table.rows;
+            switching = false
+            rows = table.rows
 
             for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
+                shouldSwitch = false
 
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i + 1].getElementsByTagName("TD")[n];
+                x = rows[i].getElementsByTagName("TD")[n]
+                y = rows[i + 1].getElementsByTagName("TD")[n]
 
                 if (dir == "asc") {
                     if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
+                        shouldSwitch = true
+                        break
                     }
                 } else if (dir == "desc") {
                     if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
+                        shouldSwitch = true
+                        break
                     }
                 }
             }
             if (shouldSwitch) {
 
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                switchcount++;
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i])
+                switching = true
+                switchcount++
             } else {
 
                 if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
+                    dir = "desc"
+                    switching = true
                 }
             }
         }
     }
 
+    function toB() {
+        alert('给个三连支持一下吧')
+    }
 </script>
