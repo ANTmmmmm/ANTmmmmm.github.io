@@ -3,16 +3,19 @@
 <meta charset="utf-8">
 
 <link rel="stylesheet" href="./assets/css/main.css">
+
 <body>
-<h1>禁用js会导致无法使用</h1>
-<p>加载中...请稍等</p>
-<title>mc_je服务端核心列表</title></body>
+    <h1>禁用js会导致无法使用</h1>
+    <p>加载中...请稍等</p>
+    <title>mc_je服务端核心列表</title>
+</body>
 
 </html>
 <script src="assets\js\jjQuery.js"></script>
 <script>
-    alert('提示：\n由于Minecraft源服务器网络问题，可能使首次访问时列表顺序混乱\n请稍等4~5秒后\n\n             ↓↓↓↓↓↓\n        →刷新页面←\n             ↑↑↑↑↑↑\n\n\n即可正常顺序的信息！')
-    var out = '<table><thead><tr><th>版本</th><th>链接</th></tr></thead><tbody>'
+    var dir
+    //alert('提示：\n由于Minecraft源服务器网络问题，可能使首次访问时列表顺序混乱\n请稍等4~5秒后\n\n             ↓↓↓↓↓↓\n        →刷新页面←\n             ↑↑↑↑↑↑\n\n\n即可正常顺序的信息！')
+    var out = '<table id="myTable2"><thead><tr><th onclick="sortTable(0)">版本</th><th onclick="sortTable(1)">发布时间</th><th>链接</th></tr></thead><tbody>'
     var url = ''
     var file_url = ''
     $.getJSON('https://launchermeta.mojang.com/mc/game/version_manifest.json', function (data) {
@@ -24,32 +27,79 @@
     })
 
 
-    function get(data) {/*https://piston-meta.mojang.com/v1/packages/82e153ef57df0877af498efba5c89baee1a16c2d/23w51a.json'*/
+    function get(data) {
         data = data
         for (i in data.versions) {
             url = data.versions[i].url
             $.getJSON(url, function (raw) {
                 raw = raw
                 try {
-                    file_url = raw.downloads.server.url
-                    ver_id = raw.id
-                    out = out + '\
-                    <tr><td>' + ver_id + '</td><td><a style="white-space: nowrap;" href=' + file_url + '>' + file_url + '</a></td></tr>'
+                    if (raw.downloads.server.url != undefined) {
+                        if (raw.type == 'release') {
+                            file_url = raw.downloads.server.url
+                            ver_id = raw.id
+                            rel_date = raw.releaseTime.substring(0, 10)
+                            console.log(rel_date)
+                            rel_time = new Date(raw.releaseTime).getTime()
+                            file_url = raw.downloads.server.url
+                            ver_id = raw.id
+                            out = out + '\
+                        <tr><td>' + ver_id + '</td><td>\u200b' + rel_date + '<td><a style="white-space: nowrap;" href=' + file_url + '>' + file_url + '</a></td></tr>'
+                        }
+                    }
                 }
                 catch {
-                    out = out + '\
-                    <tr><td>' + ver_id + '</td><td><p>None</p></td></tr>'
+                    sortTable(1)
+                    sortTable(1)
+                    throw new Error
                 }
-                document.body.innerHTML=out
-                
-
-
+                document.body.innerHTML = out
             })
-            
-            
-            
+        }
+    }
 
-        }}
 
-    
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, switchcount = 0;
+        table = document.getElementById("myTable2");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
 </script>
