@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="./assets/css/main.css">
+<body>
+<h1>禁用js会导致无法使用</h1>
+<p>加载中...请稍等</p>
+<title>mc_je服务端核心列表</title></body>
+
+</html>
+<script src="assets\js\jjQuery.js"></script>
+<script>
+    var out = '<table><thead><tr><th>版本</th><th>链接</th></tr></thead><tbody>'
+    var url = ''
+    var file_url = ''
+    $.getJSON('https://launchermeta.mojang.com/mc/game/version_manifest.json', function (data) {
+        get(data)
+
+    });
+    $(document).ready(function () {
+
+    })
+
+
+    function get(data) {/*https://piston-meta.mojang.com/v1/packages/82e153ef57df0877af498efba5c89baee1a16c2d/23w51a.json'*/
+        data = data
+        for (i in data.versions) {
+            url = data.versions[i].url
+            $.getJSON(url, function (raw) {
+                raw = raw
+                try {
+                    file_url = raw.downloads.server.url
+                    ver_id = raw.id
+                    out = out + '\
+                    <tr><td>' + ver_id + '</td><td><a style="white-space: nowrap;" href=' + file_url + '>' + file_url + '</a></td></tr>'
+                }
+                catch {
+                    out = out + '\
+                    <tr><td>' + ver_id + '</td><td><p>None</p></td></tr>'
+                }
+                document.body.innerHTML=out
+                
+
+
+            })
+            
+            
+            
+
+        }}
+
+    
+</script>

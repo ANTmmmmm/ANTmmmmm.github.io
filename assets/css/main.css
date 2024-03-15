@@ -1,0 +1,5 @@
+body{
+    font-size: large;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
