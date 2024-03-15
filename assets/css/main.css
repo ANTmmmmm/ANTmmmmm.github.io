@@ -1,5 +1,21 @@
-body{
+body {
     font-size: large;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #444444;
+    color: white;
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
